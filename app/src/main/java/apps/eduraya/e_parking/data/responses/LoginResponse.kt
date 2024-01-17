@@ -54,5 +54,8 @@ data class UserInfo(
     val created_at: String? = null,
 
     @ColumnInfo(name = "updated_at")
-    val updated_at: String? = null
+    val updated_at: String? = null,
+
+//    @ColumnInfo(name = "roles")
+//    val roles: List<String>? = null
 ):Parcelable

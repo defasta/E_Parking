@@ -3,6 +3,7 @@ package apps.eduraya.e_parking
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import apps.eduraya.e_parking.data.network.Resource
 import com.google.android.material.snackbar.Snackbar
@@ -51,30 +52,40 @@ fun Fragment.handleApiError(
     failure: Resource.Failure,
     retry: (() -> Unit)? = null
 ) {
-    when {
-        failure.isNetworkError -> requireView().snackbar(
-            "Mohon cek koneksi internet Anda",
-            retry
-        )
-//        failure.errorCode == 422 -> {
-//            if (this is LoginFragment) {
-//                requireView().snackbar("You've entered incorrect email or password")
-//            } else {
-//                logout()
-//            }
-//        }
-//        failure.errorCode == 422 -> {
-//            if (this is SignUpFragment) {
-//                requireView().snackbar("Password dan konfirmasi password harus sama!")
-//            } else {
-//                logout()
-//            }
-//        }
-        else -> {
-            val error = failure.errorBody?.string().toString()
-            requireView().snackbar(error)
-        }
-    }
+//    when {
+////        failure.isNetworkError -> requireView().snackbar(
+////            failure.errorBody?.string().toString(),
+////            retry
+////        )
+//////        failure.errorCode == 422 -> {
+//////            if (this is LoginFragment) {
+//////                requireView().snackbar("You've entered incorrect email or password")
+//////            } else {
+//////                logout()
+//////            }
+//////        }
+//////        failure.errorCode == 422 -> {
+//////            if (this is SignUpFragment) {
+//////                requireView().snackbar("Password dan konfirmasi password harus sama!")
+//////            } else {
+//////                logout()
+//////            }
+//////        }
+////        else -> {
+//            val error = failure.errorBody?.string().toString()
+//            requireView().snackbar(error)
+//        //}
+    //}
+    val error = failure.errorCode.toString()
+    requireView().snackbar(error)
+}
+
+fun Activity.handleApiErrorActivity(
+    failure: Resource.Failure,
+    retry: (() -> Unit)? = null
+) {
+    val error = failure.errorBody.toString()
+    Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
 }
 
 fun rupiah(number: Double): String {

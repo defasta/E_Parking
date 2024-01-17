@@ -38,22 +38,22 @@ class ReservationFragment : BaseFragment<FragmentReservationBinding>(FragmentRes
     }
 
     private fun getReservationList(){
-        val userPreferences = UserPreferences(context!!)
-        userPreferences.accessToken.asLiveData().observe(this, androidx.lifecycle.Observer { token ->
+        val userPreferences = UserPreferences(requireContext())
+        userPreferences.accessToken.asLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer { token ->
             viewModel.setAllReservationResponse("Bearer $token")
-            viewModel.getAllReservationResponse.observe(this, Observer {
+            viewModel.getAllReservationResponse.observe(viewLifecycleOwner, Observer {
                 binding.progressbar.visible(it is Resource.Loading)
                 when(it){
                     is Resource.Success ->
                         lifecycleScope.launch {
                             it.value.data?.data?.sortByDescending { item -> item.createdAt }
                             reservationAdapter = ReservationAdapter(it.value.data?.data)
-                            binding.rvListReservation.layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+                            binding.rvListReservation.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                             binding.rvListReservation.adapter = reservationAdapter
                             binding.rvListReservation.setHasFixedSize(true)
                             reservationAdapter.setOnItemClickCallback(object :ReservationAdapter.OnItemClickCallback{
                                 override fun onItemClicked(dataReservation: DataReservations) {
-                                   requireActivity().startAnActivity(MyQrActivity::class.java)
+//                                   requireActivity().startAnActivity(MyQrActivity::class.java)
                                 }
                             })
 

@@ -55,7 +55,6 @@
         android:layout_width="120dp"
         android:backgroundTint="@android:color/darker_gray"
         android:layout_height="50dp"
-        android:visibility="invisible"
         android:text="Ubah Foto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

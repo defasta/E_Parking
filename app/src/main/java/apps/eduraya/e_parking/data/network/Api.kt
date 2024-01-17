@@ -2,6 +2,7 @@ package apps.eduraya.e_parking.data.network
 
 import apps.eduraya.e_parking.data.responses.*
 import apps.eduraya.e_parking.data.responses.deposit.GetDepositResponse
+import apps.eduraya.e_parking.data.responses.exitparking.ExitParkingResponse
 import apps.eduraya.e_parking.data.responses.getplace.GetQuotasByPlaceResponse
 import apps.eduraya.e_parking.data.responses.insurance.GetInsuranceResponse
 import apps.eduraya.e_parking.data.responses.lastparking.GetLastParkingResponse
@@ -11,6 +12,7 @@ import apps.eduraya.e_parking.data.responses.user.GetDataUserResponse
 import apps.eduraya.e_parking.data.responses.valet.GetValetAreaResponse
 import apps.eduraya.e_parking.data.responses.vehicle.GetAllVehicleResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface Api: BaseApi {
@@ -39,10 +41,10 @@ interface Api: BaseApi {
     @POST("auth/change-profile")
     suspend fun changeProfile(
         @Header("Authorization") authHeader: String,
-        @Field("name") name:String,
-        @Field("email") email: String,
-        @Part("avatar") avatar: String,
-        @Field("phone") phone: String
+        @Part("name") name:RequestBody,
+        @Part("email") email: RequestBody,
+        @Part avatar: MultipartBody.Part,
+        @Part("phone") phone: RequestBody
     ):EditProfileResponse
 
     @GET("places")
@@ -107,4 +109,34 @@ interface Api: BaseApi {
     suspend fun getLastParking(
         @Header("Authorization") authHeader: String,
     ): GetLastParkingResponse
+
+    @FormUrlEncoded
+    @POST("parkings/request-enter")
+    suspend fun requestEnterParking(
+        @Header("Authorization") authHeader: String,
+        @Field("gate_id") gateId:String,
+        @Field("is_insurance") isInsurance: String
+    ): EnterParkingResponse
+
+    @FormUrlEncoded
+    @POST("parkings/request-exit")
+    suspend fun requestExitParking(
+        @Header("Authorization") authHeader: String,
+        @Field("officer_id") gateId:String,
+    ): ExitParkingResponse
+
+    @FormUrlEncoded
+    @POST("auth/request-reset-password")
+    suspend fun requestResetPassword(
+        @Field("email") email:String,
+    ): RequestResetPasswordResponse
+
+    @FormUrlEncoded
+    @POST("auth/reset-password")
+    suspend fun resetPassword(
+        @Field("email") email:String,
+        @Field("token") token:String,
+        @Field("password") password:String,
+        @Field("password_confirmation") passwordC:String,
+    ): RequestResetPasswordResponse
 }

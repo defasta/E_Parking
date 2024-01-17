@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import apps.eduraya.e_parking.*
 import apps.eduraya.e_parking.data.network.Resource
 import apps.eduraya.e_parking.databinding.FragmentLoginBinding
+import apps.eduraya.e_parking.ui.auth.forgot_password.RequestResetPasswordActivity
 import apps.eduraya.e_parking.ui.base.BaseFragment
 import apps.eduraya.e_parking.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,6 +64,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             val direction =
                 apps.eduraya.e_parking.ui.auth.login.LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
             authentionNavController?.navigate(direction)
+        }
+
+        binding.textViewForgotPassword.setOnClickListener {
+            requireActivity().startAnActivity(RequestResetPasswordActivity::class.java)
         }
 
     }

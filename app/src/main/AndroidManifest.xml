@@ -14,7 +14,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.E_Parking">
+        <activity
+            android:name=".ui.auth.forgot_password.ResetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.auth.forgot_password.RequestResetPasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.insurance.InsuranceActivity"
             android:exported="true" />

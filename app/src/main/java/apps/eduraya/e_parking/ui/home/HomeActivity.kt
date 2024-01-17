@@ -52,24 +52,32 @@ class HomeActivity : AppCompatActivity() {
         getInsuranceInfo()
         val userPreferences = UserPreferences(this)
         binding.fab.setOnClickListener {
-            userPreferences.accessToken.asLiveData().observe(this, Observer {token->
-                viewModel.setLastParkingResponse("Bearer $token")
-                viewModel.getLastParkingResponse.observe(this, Observer {
-                    when(it){
-                        is Resource.Loading -> {}
-                        is Resource.Success -> {
-                            lifecycleScope.launch {
-                                viewModel.isCheckin("0")
-                                viewModel.saveIdLastParking(it.value.data.id.toString())
-                            }
-                            startActivity(Intent(this@HomeActivity, MyQrActivity::class.java ))
-                        }
-                        is Resource.Failure -> {
-                            doCheckin()
-                        }
-                    }
-                })
+            val userPreferences = UserPreferences(this)
+            userPreferences.isCheckin.asLiveData().observe(this, Observer {
+                if(it == "1"){
+                    doCheckin()
+                }else if(it == "0"){
+                    startActivity(Intent(this@HomeActivity, MyQrActivity::class.java ))
+                }
             })
+//            userPreferences.accessToken.asLiveData().observe(this, Observer {token->
+//                viewModel.setLastParkingResponse("Bearer $token")
+//                viewModel.getLastParkingResponse.observe(this, Observer {
+//                    when(it){
+//                        is Resource.Loading -> {}
+//                        is Resource.Success -> {
+//                            lifecycleScope.launch {
+//                                viewModel.isCheckin("0")
+//                                viewModel.saveIdLastParking(it.value.data.id.toString())
+//                            }
+//                            startActivity(Intent(this@HomeActivity, MyQrActivity::class.java ))
+//                        }
+//                        is Resource.Failure -> {
+//                            doCheckin()
+//                        }
+//                    }
+//                })
+//            })
 //            doCheckin()
 //            userPreferences.isInsurance.asLiveData().observe(this, Observer { isInsurance ->
 //                if (isInsurance == "0"){
@@ -95,20 +103,19 @@ class HomeActivity : AppCompatActivity() {
         val userPreferences = UserPreferences(this)
         userPreferences.accessToken.asLiveData().observe(this, Observer { token->
             viewModel.setInsuranceInfoResponse("Bearer $token")
-            viewModel.getInsuranceResponse.observe(this, Observer {
-                when(it){
-                    is Resource.Loading ->{}
-                    is Resource.Success -> {
-                        lifecycleScope.launch {
-                            viewModel.saveInsurancePriceInfo(it.value.data.price.toString())
-                            viewModel.saveInsuranceDetailInfo(it.value.data.description)
-                        }
-                    }
-                    is Resource.Failure -> Toast.makeText(this, "Gagal memuat data", Toast.LENGTH_SHORT).show()
-                }
-            })
         })
-
+        viewModel.getInsuranceResponse.observe(this, Observer {
+            when(it){
+                is Resource.Loading ->{}
+                is Resource.Success -> {
+                    lifecycleScope.launch {
+                        viewModel.saveInsurancePriceInfo(it.value.data.price.toString())
+                        viewModel.saveInsuranceDetailInfo(it.value.data.description)
+                    }
+                }
+                is Resource.Failure -> Toast.makeText(this, "Gagal memuat data", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun doCheckin(){
@@ -120,14 +127,16 @@ class HomeActivity : AppCompatActivity() {
                 .setPositiveButton("Ya"){dialogInterface, it ->
                     lifecycleScope.launch {
                         viewModel.isInsurance("-11")
-                        viewModel.isCheckin("1")
+                        viewModel.isInsuranceRequest("1")
+//                        viewModel.isCheckin("1")
                     }
                     startActivity(Intent(this@HomeActivity, MyQrActivity::class.java ))
                 }
                 .setNegativeButton("Tidak"){dialogInterface, it ->
                     lifecycleScope.launch {
                         viewModel.isInsurance("-00")
-                        viewModel.isCheckin("1")
+                        viewModel.isInsuranceRequest("0")
+//                        viewModel.isCheckin("1")
                     }
                     startActivity(Intent(this@HomeActivity, MyQrActivity::class.java ))
                 }

@@ -19,6 +19,7 @@ import android.view.WindowManager
 import androidx.lifecycle.asLiveData
 import apps.eduraya.e_parking.data.db.UserPreferences
 import apps.eduraya.e_parking.ui.home.HomeActivity
+import apps.eduraya.e_parking.ui.scan_qr.ScanQrActivity
 
 @AndroidEntryPoint
 class MyQrActivity : AppCompatActivity() {
@@ -36,6 +37,10 @@ class MyQrActivity : AppCompatActivity() {
 
         binding.navBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.ivCamera.setOnClickListener {
+            startActivity(Intent(this@MyQrActivity, ScanQrActivity::class.java ))
         }
 
         val userPreferences = UserPreferences(this)

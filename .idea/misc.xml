@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -35,38 +34,42 @@
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_choose_vehicle.xml" value="0.33" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_create_deposit.xml" value="0.1" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_edit_profile.xml" value="0.33" />
-        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_insurance.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_maps.xml" value="0.22" />
-        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_my_qr.xml" value="0.15" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_my_qr.xml" value="0.1" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_pay_deposit.xml" value="0.25" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_payment_web_view.xml" value="0.22" />
-        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_scan_qr.xml" value="0.31431159420289856" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_request_reset_password.xml" value="0.22" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_reset_password.xml" value="0.25" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_scan_qr.xml" value="0.18" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/activity_valet_booking.xml" value="0.17831813576494426" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_activities.xml" value="0.1" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_base.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_login.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_login.xml" value="0.12658227848101267" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_notification.xml" value="0.33" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_payment.xml" value="0.12" />
-        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_profile.xml" value="0.5" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_recent.xml" value="0.23505434782608695" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_reservation.xml" value="0.16" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/fragment_sign_up.xml" value="0.25" />
-        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/home_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/home_fragment.xml" value="0.2" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/item_list_feature.xml" value="0.25" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/item_list_valet.xml" value="0.13" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/list_item_deposit.xml" value="0.22" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/list_item_location.xml" value="0.25" />
-        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/list_item_reservation.xml" value="0.1" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/list_item_reservation.xml" value="0.33" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/list_item_valet_area.xml" value="0.2868421052631579" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/layout/toolbar_maps.xml" value="0.35597826086956524" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.152" />
+        <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.152" />
         <entry key="..\:/Users/apdef/Eduraya/E_Parking/app/src/main/res/xml/network_security_config.xml" value="0.2015625" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -14,11 +14,13 @@ class ReservationAdapter (val items: ArrayList<DataReservations>?):RecyclerView.
         var tvPlace: TextView
         var tvVehicle : TextView
         var tvDate: TextView
+        var tvStatus: TextView
 
         init {
             tvPlace = itemView.tvPlace
             tvVehicle = itemView.tvVehicle
             tvDate = itemView.tvDate
+            tvStatus = itemView.status
         }
 
         fun bind(listReservation: DataReservations){
@@ -53,6 +55,7 @@ class ReservationAdapter (val items: ArrayList<DataReservations>?):RecyclerView.
             holder.tvVehicle.text = "Mobil"
         }
         holder.tvDate.text = listReservation.checkIn
+        holder.tvStatus.text = listReservation.status
     }
 
     override fun getItemCount(): Int = items!!.size

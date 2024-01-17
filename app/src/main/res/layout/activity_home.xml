@@ -43,4 +43,5 @@
         app:backgroundTint="@color/red"
         app:layout_anchor="@id/bottomAppBar"
         app:tint="@color/white"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

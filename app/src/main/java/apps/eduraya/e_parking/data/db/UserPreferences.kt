@@ -37,6 +37,11 @@ class UserPreferences @Inject constructor(@ApplicationContext context: Context) 
             preferences[IS_INSURANCE]
         }
 
+    val isInsuranceRequest: Flow<String?>
+        get() = appContext.dataStore.data.map { preferences ->
+            preferences[IS_INSURANCE_REQUEST]
+        }
+
     val isCheckin: Flow<String?>
         get() = appContext.dataStore.data.map { preferences ->
             preferences[IS_CHECKIN]
@@ -87,6 +92,11 @@ class UserPreferences @Inject constructor(@ApplicationContext context: Context) 
         }
     }
 
+    suspend fun isInsuranceRequest(isInsurance: String){
+        appContext.dataStore.edit { preferences ->
+            preferences[IS_INSURANCE_REQUEST] = isInsurance
+        }
+    }
     suspend fun isCheckin(isCheckin: String){
         appContext.dataStore.edit { preferences ->
             preferences[IS_CHECKIN] = isCheckin
@@ -106,6 +116,7 @@ class UserPreferences @Inject constructor(@ApplicationContext context: Context) 
         private val INSURANCE_PRICE = stringPreferencesKey("key_insurance_price")
         private val INSURANCE_DETAIL = stringPreferencesKey("key_insurance_detail")
         private val IS_INSURANCE = stringPreferencesKey("key_is_insurance")
+        private val IS_INSURANCE_REQUEST = stringPreferencesKey("key_is_insurance_request")
         private val IS_CHECKIN = stringPreferencesKey("key_is_checkin")
         private val ID_LAST_PARKING = stringPreferencesKey("key_id_last_parking")
 

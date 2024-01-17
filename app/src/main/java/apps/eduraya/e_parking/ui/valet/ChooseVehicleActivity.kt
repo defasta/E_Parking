@@ -89,31 +89,33 @@ class ChooseVehicleActivity : AppCompatActivity() {
 
         binding.bookingMotor.setOnClickListener {
             userPreferences.isCheckin.asLiveData().observe(this, Observer {
-                if (it == "0"){
-                    Toast.makeText(this@ChooseVehicleActivity, "Anda hanya diizinkan memesan satu valet.", Toast.LENGTH_SHORT).show()
-                }else if(it == "1"){
-                    viewModel.idPlace.observe(this, Observer {id ->
-                        startActivity(Intent(this@ChooseVehicleActivity, ChooseValetAreaActivity::class.java).apply {
-                            putExtra("KEY_ID_PLACE", id)
-                            putExtra("KEY_ID_VEHICLE", "1")
-                        })
+//                if (it == "0"){
+//                    Toast.makeText(this@ChooseVehicleActivity, "Anda hanya diizinkan memesan satu valet.", Toast.LENGTH_SHORT).show()
+//                }else if(it == "1"){
+//
+//                }
+                viewModel.idPlace.observe(this, Observer {id ->
+                    startActivity(Intent(this@ChooseVehicleActivity, ChooseValetAreaActivity::class.java).apply {
+                        putExtra("KEY_ID_PLACE", id)
+                        putExtra("KEY_ID_VEHICLE", "1")
                     })
-                }
+                })
             })
         }
 
         binding.bookingCar.setOnClickListener {
             userPreferences.isCheckin.asLiveData().observe(this, Observer {
-                if (it == "0"){
-                    Toast.makeText(this@ChooseVehicleActivity, "Anda hanya diizinkan memesan satu valet.", Toast.LENGTH_SHORT).show()
-                }else if(it == "1"){
-                    viewModel.idPlace.observe(this, Observer {id ->
-                        startActivity(Intent(this@ChooseVehicleActivity, ChooseValetAreaActivity::class.java).apply {
-                            putExtra("KEY_ID_PLACE", id)
-                            putExtra("KEY_ID_VEHICLE", "2")
-                        })
+                viewModel.idPlace.observe(this, Observer {id ->
+                    startActivity(Intent(this@ChooseVehicleActivity, ChooseValetAreaActivity::class.java).apply {
+                        putExtra("KEY_ID_PLACE", id)
+                        putExtra("KEY_ID_VEHICLE", "2")
                     })
-                }
+                })
+//                if (it == "0"){
+//                    Toast.makeText(this@ChooseVehicleActivity, "Anda hanya diizinkan memesan satu valet.", Toast.LENGTH_SHORT).show()
+//                }else if(it == "1"){
+//
+//                }
             })
         }
     }

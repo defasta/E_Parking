@@ -4,20 +4,26 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -28,8 +34,15 @@ import apps.eduraya.e_parking.databinding.ActivityEditProfileBinding
 import apps.eduraya.e_parking.startAnActivity
 import apps.eduraya.e_parking.ui.home.HomeActivity
 import apps.eduraya.e_parking.visible
+import com.bumptech.glide.Glide
+import com.squareup.okhttp.MediaType
+import com.squareup.okhttp.RequestBody
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 @AndroidEntryPoint
 class EditProfileActivity : AppCompatActivity() {
@@ -62,6 +75,10 @@ class EditProfileActivity : AppCompatActivity() {
             binding.editTextTextPhone.setText(it.toString())
         })
 
+        viewModel.userAvatar.observe(this, Observer {
+            Glide.with(this).load(it).into(binding.imgProfile)
+        })
+
         binding.btnChangePict.setOnClickListener {
             val checkSelfPermission = ContextCompat.checkSelfPermission(this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -76,30 +93,42 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            val userPreferences = UserPreferences(this)
-            userPreferences.accessToken.asLiveData().observe(this, Observer {
-                val name = binding.editTextTextPersonName.text.toString().trim()
-                val email = binding.editTextTextEmailAddress.text.toString().trim()
-                val avatar = imagePath!!
-                val phone = binding.editTextTextPhone.text.toString().trim()
+            if(imagePath != null){
+                val userPreferences = UserPreferences(this)
+                userPreferences.accessToken.asLiveData().observe(this, Observer {
+                    val name = okhttp3.RequestBody.create("text/plain".toMediaTypeOrNull(), binding.editTextTextPersonName.text.toString().trim())
 
-                viewModel.setEditProfileResponse("Bearer $it",name, email, avatar, phone )
+                    val email = okhttp3.RequestBody.create("text/plain".toMediaTypeOrNull(),binding.editTextTextEmailAddress.text.toString().trim())
 
-            })
+                    val photoBody = okhttp3.RequestBody.create("image/*".toMediaTypeOrNull(), File(imagePath))
+
+                    val avatar = MultipartBody.Part.createFormData("avatar", File(imagePath).name, photoBody)
+
+                    val phone = okhttp3.RequestBody.create("text/plain".toMediaTypeOrNull(),binding.editTextTextPhone.text.toString().trim())
+
+                    viewModel.setEditProfileResponse("Bearer $it",name, email, avatar, phone)
+
+                })
+
+                viewModel.getEditProfileResponse.observe(this, Observer {
+                    binding.progressbar.visible(it is Resource.Loading)
+                    when(it){
+                        is Resource.Success ->
+                            lifecycleScope.launch {
+                                startAnActivity(HomeActivity::class.java)
+                                finishAffinity()
+                            }
+
+                        is Resource.Failure -> Toast.makeText(this, "Terjadi kesalahan.", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }else{
+                Toast.makeText(this, "Silakan upload foto terlebih dahulu", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
-        viewModel.getEditProfileResponse.observe(this, Observer {
-            binding.progressbar.visible(it is Resource.Loading)
-            when(it){
-                is Resource.Success ->
-                    lifecycleScope.launch {
-                        startAnActivity(HomeActivity::class.java)
-                        finishAffinity()
-                    }
 
-                is Resource.Failure -> Toast.makeText(this, "Terjadi kesalahan.", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     private fun openGallery(){
@@ -157,9 +186,14 @@ class EditProfileActivity : AppCompatActivity() {
                     selsetion)
             }
             else if ("com.android.providers.downloads.documents" == uri?.authority){
-                val contentUri = ContentUris.withAppendedId(Uri.parse(
-                    "content://downloads/public_downloads"), java.lang.Long.valueOf(docId))
-                imagePath = getImagePath(contentUri, null)
+                val fileName = getDataColumn(applicationContext, uri, null, null)
+                var uriToReturn: String? = null
+                if(fileName != null){
+                    uriToReturn = Uri.withAppendedPath(Uri.parse(Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_DOWNLOADS).absolutePath), fileName).toString()
+                }
+                //return uriToReturn
+                imagePath = uriToReturn
             }
         }
         else if ("content".equals(uri?.scheme, ignoreCase = true)){
@@ -179,6 +213,23 @@ class EditProfileActivity : AppCompatActivity() {
         else {
             show("ImagePath is null")
         }
+    }
+
+    private fun getDataColumn(context: Context, uri: Uri, selection: String?, selectionArgs: Array<String>?): String? {
+        var cursor: Cursor? = null
+        try {
+            cursor = context.contentResolver.query(uri, null, selection, selectionArgs, null)
+            if (cursor != null && cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME) //_display_name
+                return cursor.getString(columnIndex) //returns file name
+            }
+        }catch (ex: Exception){
+            Log.e( "PathUtils", "Error getting uri for cursor to read file: ${ex.message}")
+        } finally {
+            if (cursor != null)
+                cursor.close()
+        }
+        return null
     }
 
     @SuppressLint("Range")

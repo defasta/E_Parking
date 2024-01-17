@@ -79,6 +79,10 @@ class HomeViewModel @Inject constructor(
         repository.isInsurance(isInsurance)
     }
 
+    suspend fun isInsuranceRequest(isInsurance:String){
+        repository.isInsuranceRequest(isInsurance)
+    }
+
     suspend fun isCheckin(isCheckin:String){
         repository.isCheckin(isCheckin)
     }

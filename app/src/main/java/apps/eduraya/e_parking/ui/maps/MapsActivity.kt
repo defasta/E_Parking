@@ -139,15 +139,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapsView = googleMap
         //set text location
         val geocoder = Geocoder(this, Locale.getDefault())
-        try {
-            val addressList = geocoder.getFromLocation(strCurrentLatitude, strCurrentLongitude, 1)
-            if (addressList != null && addressList.size > 0) {
-                val strCity = addressList[0].locality
-                binding.tvCity.text = strCity
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
+//        try {
+//            val addressList = geocoder.getFromLocation(strCurrentLatitude, strCurrentLongitude, 1)
+//            if (addressList != null && addressList.size > 0) {
+//                val strCity = addressList[0].locality
+//                binding.tvCity.text = strCity
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+
+        val addressList = geocoder.getFromLocation(strCurrentLatitude, strCurrentLongitude, 1)
+        if (addressList != null && addressList.size > 0) {
+            val strCity = addressList[0].locality
+            binding.tvCity.text = strCity
         }
+
         //viewmodel
         getLocationViewModel()
     }
